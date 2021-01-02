@@ -1,5 +1,19 @@
 # flask-example-cicd
 
+This is a simple python flask application to host a simple web app.
+
+After starting the flask application you can access following URL's on the server:
+| Function        | URL                                     |
+|-----------------|-----------------------------------------|
+| index           | `http://<server>:<port>/`               |
+| hello           | `http://<server>:<port>/hello/`         |
+| hello \<name>   | `http://<server>:<port>/hello/\<name>`  |
+| primes 100      | `http://<server>:<port>/primes/`        |
+| primes \<count> | `http://<server>:<port>/primes/<count>` |
+
+</br>
+
+
 ## Simple instructions
 
 To **build/install** the flask application run
