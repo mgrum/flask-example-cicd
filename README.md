@@ -16,7 +16,7 @@ After starting the flask application you can access following URL's on the serve
 
 ## Simple instructions
 
-To **build/install** the flask application run
+To **build/install** the flask application use
 
 ``` 
 . build.sh
@@ -28,7 +28,7 @@ After that you can **run** the server on port **:8080** with
 . run.sh
 ````
 
-To test the application simply use
+To test the application use
 
 ```
 pytest
@@ -56,7 +56,7 @@ docker run --rm -d -p 8080:8080/tcp flask-example:latest --name flask-example
 
 You can change the environmental variable for **flask** in the **Dockerfile**, for example you can change the port by changing `ENV FLASK_RUN_PORT=8080`
 
-To stop the container just
+To stop the container use
 
 ```docker
 docker stop flask-example
