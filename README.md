@@ -30,7 +30,9 @@ After that you can **run** the server on port **:8080** with
 
 To test the application use
 
-```
+```shell
+# install flake8 and pytest manually or use "reset-dev.sh"
+pip install flake8 pytest 
 pytest
 ````
 
@@ -74,10 +76,11 @@ source venv/bin/activate
 
 With `deactivate` you can disable the virtual environment again
 
-The script **reset-dev.sh** will do the following for you:
+The script **reset-dev.sh** will do the following for you: 
 * Delete virtual environment **venv**
 * Create a new virtual environment **venv** without dependencies installed
 * Activating **venv** if script is used from source
+* Install **flake8** and **pytest** in created virtual environment
 * Remove all folders created by build/install
     * package info (*egg-info)    
     * build folder
