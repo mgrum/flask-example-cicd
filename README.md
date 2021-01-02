@@ -7,7 +7,7 @@ After starting the flask application you can access following URL's on the serve
 |-----------------|-----------------------------------------|
 | index           | `http://<server>:<port>/`               |
 | hello           | `http://<server>:<port>/hello/`         |
-| hello \<name>   | `http://<server>:<port>/hello/\<name>`  |
+| hello \<name>   | `http://<server>:<port>/hello/<name>`   |
 | primes 100      | `http://<server>:<port>/primes/`        |
 | primes \<count> | `http://<server>:<port>/primes/<count>` |
 
