@@ -47,13 +47,13 @@ docker build . -t flask-example:latest
 To **run** the docker image in **interactive mode**
 
 ```docker
-docker run --rm -it -p 8080:8080/tcp flask-example:latest --name flask-example
+docker run --rm -it -p 8080:8080/tcp --name flask-example flask-example:latest
 ```
 
 To **run** the docker image in **detached mode**
 
 ```docker
-docker run --rm -d -p 8080:8080/tcp flask-example:latest --name flask-example
+docker run --rm -d -p 8080:8080/tcp --name flask-example flask-example:latest
 ```
 
 You can change the environmental variable for **flask** in the **Dockerfile**, for example you can change the port by changing `ENV FLASK_RUN_PORT=8080`
