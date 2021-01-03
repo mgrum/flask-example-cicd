@@ -4,6 +4,7 @@ source venv/bin/activate
 deactivate
 rm -r venv
 rm -r build
+rm -r .pytest_cache
 find . | grep -E "(__pycache__|\.pyc|\.pyo$|*egg-info)" | xargs rm -rf
 find . -name "*.so" -type f -delete
 python3 -m venv venv
