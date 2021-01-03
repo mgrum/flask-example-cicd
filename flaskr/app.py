@@ -36,5 +36,6 @@ def primes(count=None):
                            primes=str(pc.primes(count)))
 
 
+# Debug flask app - if run as main application
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8080)
