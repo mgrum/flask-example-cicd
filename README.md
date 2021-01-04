@@ -11,10 +11,11 @@ After starting the flask application you can access following URL's on the serve
 | primes 100      | `http://<server>:<port>/primes/`        |
 | primes \<count> | `http://<server>:<port>/primes/<count>` |
 
-</br>
+## Requirements
 
+* Python 3.X
 
-## Simple instructions
+## Simple instructions (Linux or WSL)
 
 To **build/install** the flask application use
 
