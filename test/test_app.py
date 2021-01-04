@@ -1,5 +1,4 @@
 import json
-from flaskr import app as flaskr_app
 
 
 def test_index_route(app, client):
@@ -8,12 +7,14 @@ def test_index_route(app, client):
     expected = '<h2 class="text-center">flask example ci/cd</h2>'
     assert expected in res.get_data(as_text=True)
 
+
 def test_json_route(app, client):
     res = client.get('/json/')
     assert res.status_code == 200
     expected = {'hello': 'world'}
     assert expected == json.loads(res.get_data(as_text=True))
-    
+
+
 def test_hello_route(app, client):
     res = client.get('/hello')
     assert res.status_code == 308
@@ -25,7 +26,8 @@ def test_hello_route(app, client):
     assert res.status_code == 200
     expected = "Hello test."
     assert expected in res.get_data(as_text=True)
-    
+
+
 def test_primes_route(app, client):
     res = client.get('/primes/')
     assert res.status_code == 200

@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from . import prime_cython as pc
+from . import random_name as rn
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def index():
 
 @app.route('/json/')
 def json():
-    return {"hello": "world2"}
+    return {"hello": "world"}
 
 
 @app.route('/hello/')
@@ -23,9 +24,10 @@ def hello(name=None):
         name = "Anonymous"
     return render_template("hello.html", name=name)
 
+
 @app.route('/hello/random')
 def hello_random():
-    return render_template("hello.html", name="Todo")
+    return render_template("hello.html", name=rn.random_name())
 
 
 @app.route('/primes/')
@@ -41,7 +43,7 @@ def primes(count=None):
 
 
 # Debug flask app - if run as main application
-# To run this application use "python -m flaskr.app" from the project root folder
+# To run this application use "python -m flaskr.app" from root folder
 if __name__ == '__main__':
     app.env = "development"
     app.run(debug=True, host='0.0.0.0', port=8080)
