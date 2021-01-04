@@ -13,7 +13,7 @@ def index():
 
 @app.route('/json/')
 def json():
-    return {"hello": "world"}
+    return {"hello": "world2"}
 
 
 @app.route('/hello/')
@@ -41,5 +41,7 @@ def primes(count=None):
 
 
 # Debug flask app - if run as main application
+# To run this application use "python -m flaskr.app" from the project root folder
 if __name__ == '__main__':
+    app.env = "development"
     app.run(debug=True, host='0.0.0.0', port=8080)
