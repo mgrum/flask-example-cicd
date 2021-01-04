@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>flask-example</title>
+    <title>flask-example hello</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
@@ -27,14 +27,13 @@
     <div class="highlight-clean">
         <div class="container">
             <div class="intro">
-                <h2 class="text-center">flask example ci/cd</h2>
-                <p class="text-center">Your flask application is running successfully.<br>Feel free to check out following example functionalities:</p>
+                <h2 class="text-center">Hello {{name}}.</h2>
+                <p class="text-center">To change your name access following URL with a given name: 
+                    <span style="white-space: nowrap;">/hello/<strong>&lt;name&gt;</strong></span></p>
             </div>
-            <div class="buttons">
-                <a class="btn btn-primary" role="button" href="/hello/">Hello</a>
-                <a class="btn btn-primary" role="button" href="/primes/">Primes</a>
-            </div>
+            <div class="buttons"></div>
         </div>
+        <div class="buttons"><a class="btn btn-primary" role="button" href="/hello/random" style="background: var(--cyan);">Random Name</a></div>
     </div>
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>

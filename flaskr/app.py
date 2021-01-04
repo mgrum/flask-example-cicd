@@ -21,18 +21,22 @@ def json():
 def hello(name=None):
     if name is None:
         name = "Anonymous"
-    return "Hello " + str(name) + "."
+    return render_template("hello.html", name=name)
+
+@app.route('/hello/random')
+def hello_random():
+    return render_template("hello.html", name="Todo")
 
 
 @app.route('/primes/')
 @app.route('/primes/<int:count>')
 def primes(count=None):
-    if count is None:
-        count = 100
+    if count is None or count == 0:
+        return render_template("primes.html")
     elif count > 1000:
         return "Please select a natural number lower or equal to 1000."
     # Return prime.html with list of prime numbers
-    return render_template("prime.html", count=str(count),
+    return render_template("primes.html", count=str(count),
                            primes=str(pc.primes(count)))
 
 

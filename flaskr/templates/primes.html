@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>flask-example</title>
+    <title>flask-example primes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter:400,700">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
@@ -27,14 +27,27 @@
     <div class="highlight-clean">
         <div class="container">
             <div class="intro">
-                <h2 class="text-center">flask example ci/cd</h2>
-                <p class="text-center">Your flask application is running successfully.<br>Feel free to check out following example functionalities:</p>
-            </div>
-            <div class="buttons">
-                <a class="btn btn-primary" role="button" href="/hello/">Hello</a>
-                <a class="btn btn-primary" role="button" href="/primes/">Primes</a>
+                {% if count %}
+                    {% if count == "1" %}
+                <h2 class="text-center">First prime number:</h2>
+                    {% else %}
+                <h2 class="text-center">First {{count}} prime numbers:</h2>
+                    {% endif %}
+                <p class="text-center">{{primes}}</p>
+                {% else  %}
+                <h2 class="text-center">Please select a count for prime numbers!</h2>
+                {% endif %}
+                <p class="text-center">To change the count of prime numbers just access following URL with a given natural number: /primes/<strong>&lt;count&gt;</strong></p>
+                                
             </div>
         </div>
+        <div class="buttons">
+            <a class="btn btn-primary" role="button" href="/primes/10" style="background: var(--danger);">10</a>
+            <a class="btn btn-primary" role="button" href="/primes/50" style="background: var(--danger);">50</a>
+            <a class="btn btn-primary" role="button" href="/primes/100" style="background: var(--danger);">100</a>
+            <a class="btn btn-primary" role="button" href="/primes/1000" style="background: var(--danger);">1000</a>
+        </div>
+        <p class="text-center">You can also use a predefined button.</p>
     </div>
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
