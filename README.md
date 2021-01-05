@@ -74,9 +74,11 @@ You can debug the flask app with
 python3 -m flask.app
 ```
 
-The virtual environment **venv** and the script **reset-dev.sh** will only affect local development on your machine.
+### Virtual Environment
 
-If you want to use a python virtual environment you can run
+For local development you can use a [virtual environment](https://docs.python.org/3/tutorial/venv.html).
+
+[How to install virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b). 
 
 ```
 python3 -m venv "venv"
@@ -84,6 +86,14 @@ source venv/bin/activate
 ````
 
 With `deactivate` you can disable the virtual environment again
+
+### reset-dev.sh
+
+You can also use the script **reset-dev.sh** to (re)create a virtual environment **venv** and also clean up build-files.
+
+```
+. reset-dev.sh
+````
 
 The script **reset-dev.sh** will do the following for you: 
 * Delete virtual environment **venv**
@@ -93,10 +103,10 @@ The script **reset-dev.sh** will do the following for you:
 * Remove all folders created by build/install
     * package info (*egg-info)    
     * build folder
-    * built cython files (*.so)
+    * dist folder
     * pycache folders
+    * built cython files (*.so)
+    
 
-```
-. reset-dev.sh
-````
+
 
