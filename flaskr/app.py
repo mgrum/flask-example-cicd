@@ -4,12 +4,12 @@ from . import random_name as rn
 
 app = Flask(__name__)
 
-hello_message = "This is a message from flask!"
+HELLO_MESSAGE = "This is a message from flask!"
 
 
 @app.route('/')
 def index():
-    return render_template("index.html", message=hello_message)
+    return render_template("index.html", message=HELLO_MESSAGE)
 
 
 @app.route('/json/')
@@ -35,7 +35,7 @@ def hello_random():
 def primes(count=None):
     if count is None or count == 0:
         return render_template("primes.html")
-    elif count > 1000:
+    if count > 1000:
         return "Please select a natural number lower or equal to 1000."
     # Return prime.html with list of prime numbers
     return render_template("primes.html", count=str(count),
