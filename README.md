@@ -107,7 +107,7 @@ The script **reset-dev.sh** will do the following for you:
 * Delete virtual environment **venv**
 * Create a new virtual environment **venv** without dependencies installed
 * Activating **venv** if script is used from source
-* Install **flake8**, **pytest** and **pylint** in created virtual environment
+* Install **flake8**, **pytest**, **pylint** and **locust** in created virtual environment
 * Remove all folders created by build/install
     * package info (*egg-info)    
     * build folder
