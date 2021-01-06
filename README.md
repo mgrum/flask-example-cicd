@@ -13,7 +13,15 @@ After starting the flask application you can access following URL's on the serve
 
 ## Requirements
 
-* Python 3.X
+* python3
+* python3-dev
+* **Optional**: python3-venv
+
+```
+# example install for ubuntu
+sudo apt-get update
+sudo apt-get install python3 python3-dev python3-venv
+```
 
 ## Simple instructions (Linux or WSL)
 
@@ -106,7 +114,3 @@ The script **reset-dev.sh** will do the following for you:
     * dist folder
     * pycache folders
     * built cython files (*.so)
-    
-
-
-
