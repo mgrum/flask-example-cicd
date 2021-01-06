@@ -112,9 +112,23 @@ The script **reset-dev.sh** will do the following for you:
     * pylint (Linting)
     * autopep8 (Formatting)
     * pytest (Testing)
+    * wheel (Package building)
 * Remove all folders created by build/install
     * package info (*egg-info)    
     * build folder
     * dist folder
     * pycache folders
     * built cython files (*.so)
+
+## Deployment on production server
+
+To deploy the flask application on a production server you can use **dist/flask_example_cicd*.whl**
+
+For example you can deploy the wheel file (.whl) to a server with python3 installed and run it with
+
+```shell
+# This is an example for deployment of v0.1.0 on a linux server with python3
+pip install flask_example_cicd-0.1.0-cp38-cp38-linux_x86_64.whl
+pip install waitress
+waitress-serve --call 'flaskr:create_app'
+```

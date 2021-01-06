@@ -11,5 +11,5 @@ find . -name "*.so" -type f -delete
 python3 -m venv venv
 source venv/bin/activate
 pip install pip --upgrade
-pip install flake8 pylint autopep8 pytest
+pip install flake8 pylint autopep8 pytest wheel
 # Now you should build the project manually or with ". build.sh"
