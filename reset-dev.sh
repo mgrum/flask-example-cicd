@@ -11,4 +11,5 @@ find . -name "*.so" -type f -delete
 python3 -m venv venv
 source venv/bin/activate
 pip install pip --upgrade
-pip install flake8 pytest pylint locust
+pip install flake8 pylint autopep8 pytest locust
+# Now you should build the project manually or with ". build.sh"
