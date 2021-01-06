@@ -13,15 +13,7 @@ After starting the flask application you can access following URL's on the serve
 
 ## Requirements
 
-* python3
-* python3-dev
-* **Optional**: python3-venv
-
-```
-# example install for ubuntu
-sudo apt-get update
-sudo apt-get install python3 python3-dev python3-venv
-```
+* Python 3.X
 
 ## Simple instructions (Linux or WSL)
 
