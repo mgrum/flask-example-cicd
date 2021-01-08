@@ -13,72 +13,92 @@ After starting the flask application you can access following URL's on the serve
 | primes 100      | `http://<server>:<port>/primes/`        |
 | primes \<count> | `http://<server>:<port>/primes/<count>` |
 
-## Requirements
+## How to run
 
-* python3
-* python3-dev
-* **Optional**: python3-venv
+You can run the application in 2 ways:
 
-```bash
-# example installation for ubuntu
-sudo apt-get update
-sudo apt-get install python3 python3-dev python3-venv
-```
+* [Build and run the **docker** image](#docker-instructions)
+* [Build and run the code from **source**](#build-from-source)
 
-## Simple instructions (Linux or WSL)
+# Docker instructions
 
-To **build/install** the flask application use
+Requirements:
+* [Docker](https://docs.docker.com/desktop/) installed
 
-```bash
-. build.sh
-```
-
-After that you can **run** the server on port **:8080** with
-
-```bash
-. run.sh
-```
-
-To test the application use
-
-```bash
-# install flake8 and pytest manually or use "reset-dev.sh"
-pip install flake8 pytest 
-pytest
-```
-
-## Docker instructions
-
-Build the docker image in the project root folder with
+Build the docker image in the project root folder with:
 
 ```docker
-docker build . -t flask-example:latest
+docker build . -t flask-example-cicd:latest
 ```
 
-To **run** the docker image in **interactive mode**
+To **run** the docker image in **interactive mode**:
 
 ```docker
-docker run --rm -it -p 8080:8080/tcp --name flask-example flask-example:latest
+docker run --rm -it -p 8080:8080/tcp --name flask-example flask-example-cicd:latest
 ```
 
-To **run** the docker image in **detached mode**
+To **run** the docker image in **detached mode**:
 
 ```docker
-docker run --rm -d -p 8080:8080/tcp --name flask-example flask-example:latest
+docker run --rm -d -p 8080:8080/tcp --name flask-example flask-example-cicd:latest
 ```
 
-You can change the environmental variable for **flask** in the **Dockerfile**, for example you can change the port by changing `ENV FLASK_RUN_PORT=8080`
+You can change the environmental variable for **flask** in the [Dockerfile](Dockerfile), for example you can change the port by changing `ENV FLASK_RUN_PORT=8080`.
 
-To stop the container use
+Stop the running container:
 
 ```docker
 docker stop flask-example
 ```
 
+# Build from source
 
-## Development instructions
+Requirements:
+* python3
+* python3-dev
+* python3-pip
+* gcc (to compile cython)
+* musl-dev (to compile cython)
 
-### In-Built flask debugger
+## Instructions for Debian/Ubuntu
+
+1. Install requirements:
+
+```bash
+apt update
+apt install gcc musl-dev python3 python3-dev python3-pip
+```
+2. Build/Install project:
+
+```bash
+. build.sh
+```
+
+3. Run the server on **localhost:8080**:
+
+```bash
+. run.sh
+```
+
+# Development
+
+## Virtual Environment
+
+For local development you can use a [virtual environment](https://docs.python.org/3/tutorial/venv.html) → [How to install virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b). 
+
+Create a virtual environment:
+
+```bash
+# linux example
+python3 -m venv "venv"
+source venv/bin/activate
+````
+
+With `deactivate` you can disable the virtual environment.
+
+## Debugging
+
+### Built-In flask debugger
 You can debug the flask app by running following commands:
 
 <details><summary>Linux (Bash)</summary>
@@ -106,8 +126,9 @@ flask run
 
 When using an external debugger, the app should still be in debug mode, but it an be useful to disable the built-in debugger and reloader, which can interfere.
 
-* --no-debugger
-* --no-reload
+* `flask run --no-debugger`
+* `flask run --no-reload`
+* `flask run --no-debugger --no-reload`
 
 <details>
 <summary>Example configuration for <b>VS Code</b></summary>
@@ -140,29 +161,24 @@ When using an external debugger, the app should still be in debug mode, but it a
 ```
 </details>
 
-### Virtual Environment
+## Testing
 
-For local development you can use a [virtual environment](https://docs.python.org/3/tutorial/venv.html).
-
-[How to install virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b). 
+To run unit tests:
 
 ```bash
-# example for linux
-python3 -m venv "venv"
-source venv/bin/activate
-````
+# install pytest manually or use "reset-dev.sh"
+pip3 install pytest 
+pytest
+```
+## Reset development environment
 
-With `deactivate` you can disable the virtual environment again
-
-### Reset development environment
-
-You can also use the script **reset-dev.sh** to reset the project with
+You can use the script [reset-dev.sh](reset-dev.sh) to reset your development environment:
 
 ```bash
 . reset-dev.sh
 ```
 
-The script **reset-dev.sh** will do the following for you: 
+The script will do following:
 * (Re)create the virtual environment **venv** without dependencies installed
 * Activating **venv** in current terminal
 * Install development/testing tools in **venv**
@@ -177,4 +193,4 @@ The script **reset-dev.sh** will do the following for you:
     * pycache folders
     * built cython files (*.so, *.pyd)
 
-Now you can build the project manually or with `. build.sh`
+Now you can build the project manually or with [build.sh](build.sh).
