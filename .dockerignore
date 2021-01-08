@@ -1,6 +1,8 @@
 /venv/
 /.vscode/
+/.github/
 /.pytest_cache/
 /__pycache__/
 *.egg-info/
+*.sh
 .gitignore

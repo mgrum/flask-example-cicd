@@ -3,9 +3,11 @@
 This is a simple python flask application to host a simple web app.
 
 After starting the flask application you can access following URL's on the server:
+
 | Function        | URL                                     |
 |-----------------|-----------------------------------------|
 | index           | `http://<server>:<port>/`               |
+| json            | `http://<server>:<port>/json/`          |
 | hello           | `http://<server>:<port>/hello/`         |
 | hello \<name>   | `http://<server>:<port>/hello/<name>`   |
 | primes 100      | `http://<server>:<port>/primes/`        |
@@ -17,8 +19,8 @@ After starting the flask application you can access following URL's on the serve
 * python3-dev
 * **Optional**: python3-venv
 
-```
-# example install for ubuntu
+```bash
+# example installation for ubuntu
 sudo apt-get update
 sudo apt-get install python3 python3-dev python3-venv
 ```
@@ -27,23 +29,23 @@ sudo apt-get install python3 python3-dev python3-venv
 
 To **build/install** the flask application use
 
-``` 
+```bash
 . build.sh
-````
+```
 
 After that you can **run** the server on port **:8080** with
 
-```
+```bash
 . run.sh
-````
+```
 
 To test the application use
 
-```shell
+```bash
 # install flake8 and pytest manually or use "reset-dev.sh"
 pip install flake8 pytest 
 pytest
-````
+```
 
 ## Docker instructions
 
@@ -76,11 +78,67 @@ docker stop flask-example
 
 ## Development instructions
 
-You can debug the flask app with
+### In-Built flask debugger
+You can debug the flask app by running following commands:
 
+<details><summary>Linux (Bash)</summary>
+<pre>
+export FLASK_APP=flaskr.app
+export FLASK_ENV=<b>development</b>
+flask run
+</pre></details>
+
+<details><summary>Windows (CMD)</summary>
+<pre>
+set FLASK_APP=flaskr.app
+set FLASK_ENV=<b>development</b>
+flask run
+</pre></details>
+
+<details><summary>Windows (PowerShell)</summary>
+<pre>
+$env:FLASK_APP = "flaskr.app"
+$env:FLASK_ENV = "<b>development</b>"
+flask run
+</pre></details>
+
+### External Debugger
+
+When using an external debugger, the app should still be in debug mode, but it an be useful to disable the built-in debugger and reloader, which can interfere.
+
+* --no-debugger
+* --no-reload
+
+<details>
+<summary>Example configuration for <b>VS Code</b></summary>
+
+.vscode/launch.json
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "flaskr/app.py",
+                "FLASK_ENV": "development",
+                "FLASK_RUN_PORT" : "8080",
+                "FLASK_DEBUG": "1"
+            },
+            "args": [
+                "run",
+                "--no-debugger"
+            ],
+            "jinja": true
+        }
+    ]
+}
 ```
-python3 -m flask.app
-```
+</details>
 
 ### Virtual Environment
 
@@ -88,25 +146,25 @@ For local development you can use a [virtual environment](https://docs.python.or
 
 [How to install virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b). 
 
-```
+```bash
+# example for linux
 python3 -m venv "venv"
 source venv/bin/activate
 ````
 
 With `deactivate` you can disable the virtual environment again
 
-### reset-dev.sh
+### Reset development environment
 
-You can also use the script **reset-dev.sh** to (re)create a virtual environment **venv** and also clean up build-files.
+You can also use the script **reset-dev.sh** to reset the project with
 
-```
+```bash
 . reset-dev.sh
-````
+```
 
 The script **reset-dev.sh** will do the following for you: 
-* Delete virtual environment **venv**
-* Create a new virtual environment **venv** without dependencies installed
-* Activating **venv** if script is used from source
+* (Re)create the virtual environment **venv** without dependencies installed
+* Activating **venv** in current terminal
 * Install development/testing tools in **venv**
     * flake8 (Linting)
     * pylint (Linting)
@@ -117,4 +175,6 @@ The script **reset-dev.sh** will do the following for you:
     * build folder
     * dist folder
     * pycache folders
-    * built cython files (*.so)
+    * built cython files (*.so, *.pyd)
+
+Now you can build the project manually or with `. build.sh`
