@@ -3,110 +3,184 @@
 This is a simple python flask application to host a simple web app.
 
 After starting the flask application you can access following URL's on the server:
+
 | Function        | URL                                     |
 |-----------------|-----------------------------------------|
 | index           | `http://<server>:<port>/`               |
+| json            | `http://<server>:<port>/json/`          |
 | hello           | `http://<server>:<port>/hello/`         |
 | hello \<name>   | `http://<server>:<port>/hello/<name>`   |
 | primes 100      | `http://<server>:<port>/primes/`        |
 | primes \<count> | `http://<server>:<port>/primes/<count>` |
 
-## Requirements
+## How to run
 
-* python3
-* python3-dev
-* **Optional**: python3-venv
+You can run the application in 2 ways:
 
-```
-# example install for ubuntu
-sudo apt-get update
-sudo apt-get install python3 python3-dev python3-venv
-```
+* [Build and run the **docker** image](#docker-instructions)
+* [Build and run the code from **source**](#build-from-source)
 
-## Simple instructions (Linux or WSL)
+# Docker instructions
 
-To **build/install** the flask application use
+Requirements:
+* [Docker](https://docs.docker.com/desktop/) installed
 
-``` 
-. build.sh
-````
-
-After that you can **run** the server on port **:8080** with
-
-```
-. run.sh
-````
-
-To test the application use
-
-```shell
-# install flake8 and pytest manually or use "reset-dev.sh"
-pip install flake8 pytest 
-pytest
-````
-
-## Docker instructions
-
-Build the docker image in the project root folder with
+Build the docker image in the project root folder with:
 
 ```docker
-docker build . -t flask-example:latest
+docker build . -t flask-example-cicd:latest
 ```
 
-To **run** the docker image in **interactive mode**
+To **run** the docker image in **interactive mode**:
 
 ```docker
-docker run --rm -it -p 8080:8080/tcp --name flask-example flask-example:latest
+docker run --rm -it -p 8080:8080/tcp --name flask-example flask-example-cicd:latest
 ```
 
-To **run** the docker image in **detached mode**
+To **run** the docker image in **detached mode**:
 
 ```docker
-docker run --rm -d -p 8080:8080/tcp --name flask-example flask-example:latest
+docker run --rm -d -p 8080:8080/tcp --name flask-example flask-example-cicd:latest
 ```
 
-You can change the environmental variable for **flask** in the **Dockerfile**, for example you can change the port by changing `ENV FLASK_RUN_PORT=8080`
+You can change the environmental variable for **flask** in the [Dockerfile](Dockerfile), for example you can change the port by changing `ENV FLASK_RUN_PORT=8080`.
 
-To stop the container use
+Stop the running container:
 
 ```docker
 docker stop flask-example
 ```
 
+# Build from source
 
-## Development instructions
+Requirements:
+* python3
+* python3-dev
+* python3-pip
+* gcc (to compile cython)
+* musl-dev (to compile cython)
 
-You can debug the flask app with
+## Instructions for Debian/Ubuntu
 
+1. Install requirements:
+
+```bash
+apt update
+apt install gcc musl-dev python3 python3-dev python3-pip
 ```
-python3 -m flask.app
+2. Build/Install project:
+
+```bash
+. build.sh
 ```
 
-### Virtual Environment
+3. Run the server on **localhost:8080**:
 
-For local development you can use a [virtual environment](https://docs.python.org/3/tutorial/venv.html).
-
-[How to install virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b). 
-
+```bash
+. run.sh
 ```
+
+# Development
+
+## Virtual Environment
+
+For local development you can use a [virtual environment](https://docs.python.org/3/tutorial/venv.html) → [How to install virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b). 
+
+Create a virtual environment:
+
+```bash
+# linux example
 python3 -m venv "venv"
 source venv/bin/activate
 ````
 
-With `deactivate` you can disable the virtual environment again
+With `deactivate` you can disable the virtual environment.
 
-### reset-dev.sh
+## Debugging
 
-You can also use the script **reset-dev.sh** to (re)create a virtual environment **venv** and also clean up build-files.
+### Built-In flask debugger
+You can debug the flask app by running following commands:
 
+<details><summary>Linux (Bash)</summary>
+<pre>
+export FLASK_APP=flaskr.app
+export FLASK_ENV=<b>development</b>
+flask run
+</pre></details>
+
+<details><summary>Windows (CMD)</summary>
+<pre>
+set FLASK_APP=flaskr.app
+set FLASK_ENV=<b>development</b>
+flask run
+</pre></details>
+
+<details><summary>Windows (PowerShell)</summary>
+<pre>
+$env:FLASK_APP = "flaskr.app"
+$env:FLASK_ENV = "<b>development</b>"
+flask run
+</pre></details>
+
+### External Debugger
+
+When using an external debugger, the app should still be in debug mode, but it an be useful to disable the built-in debugger and reloader, which can interfere.
+
+* `flask run --no-debugger`
+* `flask run --no-reload`
+* `flask run --no-debugger --no-reload`
+
+<details>
+<summary>Example configuration for <b>VS Code</b></summary>
+
+.vscode/launch.json
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Flask",
+            "type": "python",
+            "request": "launch",
+            "module": "flask",
+            "env": {
+                "FLASK_APP": "flaskr/app.py",
+                "FLASK_ENV": "development",
+                "FLASK_RUN_PORT" : "8080",
+                "FLASK_DEBUG": "1"
+            },
+            "args": [
+                "run",
+                "--no-debugger"
+            ],
+            "jinja": true
+        }
+    ]
+}
 ```
-. reset-dev.sh
-````
+</details>
 
-The script **reset-dev.sh** will do the following for you: 
-* Delete virtual environment **venv**
-* Create a new virtual environment **venv** without dependencies installed
-* Activating **venv** if script is used from source
+## Testing
+
+To run unit tests:
+
+```bash
+# install pytest manually or use "reset-dev.sh"
+pip3 install pytest 
+pytest
+```
+## Reset development environment
+
+You can use the script [reset-dev.sh](reset-dev.sh) to reset your development environment:
+
+```bash
+. reset-dev.sh
+```
+
+The script will do following:
+* (Re)create the virtual environment **venv** without dependencies installed
+* Activating **venv** in current terminal
 * Install development/testing tools in **venv**
     * flake8 (Linting)
     * pylint (Linting)
@@ -118,17 +192,6 @@ The script **reset-dev.sh** will do the following for you:
     * build folder
     * dist folder
     * pycache folders
-    * built cython files (*.so)
+    * built cython files (*.so, *.pyd)
 
-## Deployment on production server
-
-To deploy the flask application on a production server you can use **dist/flask_example_cicd*.whl**
-
-For example you can deploy the wheel file (.whl) to a server with python3 installed and run it with
-
-```shell
-# This is an example for deployment of v0.1.0 on a linux server with python3
-pip install flask_example_cicd-0.1.0-cp38-cp38-linux_x86_64.whl
-pip install waitress
-waitress-serve --call 'flaskr:create_app'
-```
+Now you can build the project manually or with [build.sh](build.sh).
