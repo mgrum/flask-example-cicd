@@ -1,15 +1,14 @@
 from flask import Flask, render_template
+
 from . import prime_cython as pc
 from . import random_name as rn
 
 app = Flask(__name__)
 
-HELLO_MESSAGE = "This is a message from flask!"
-
 
 @app.route('/')
 def index():
-    return render_template("index.html", message=HELLO_MESSAGE)
+    return render_template("index.html")
 
 
 @app.route('/json/')
@@ -40,10 +39,3 @@ def primes(count=None):
     # Return prime.html with list of prime numbers
     return render_template("primes.html", count=str(count),
                            primes=str(pc.primes(count)))
-
-
-# Debug flask app - if run as main application
-# To run this application use "python -m flaskr.app" from root folder
-if __name__ == '__main__':
-    app.env = "development"
-    app.run(debug=True, host='0.0.0.0', port=8080)
