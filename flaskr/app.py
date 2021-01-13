@@ -13,7 +13,7 @@ def index():
 
 @app.route('/json/')
 def json():
-    return {"hello": "world"}
+    return {"hello": "world3"}
 
 
 @app.route('/hello/')
