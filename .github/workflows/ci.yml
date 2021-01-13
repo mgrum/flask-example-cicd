@@ -4,6 +4,8 @@
 name: CI
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -57,10 +59,3 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-
-  deploy:
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Echo deployment
-      run: echo deployment....
