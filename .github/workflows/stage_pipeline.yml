@@ -1,11 +1,12 @@
 # This workflow will install Python dependencies, lint and check for syntax errors run with a single version of Python
-# After that the workflow will also run all unit tests via pytest with a single version of Python
+# After that the workflow will also run all unit tests via pytest with a matrix of multiple OS and Python versions
+# On successful build and test it will create a docker image for stage environment and push it to a repository
 
-name: DEV - Build and Unittest
+name: STAGE - CI/CD Pipeline
 
 on:
-  push:
-    branches-ignore: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -34,12 +35,16 @@ jobs:
   test:
     needs: [build]
     runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.9, pypy3]
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.x
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: ${{ matrix.python-version }}
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
     - name: Install dependencies
@@ -53,3 +58,18 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build Docker image
+        run: docker build . -t mgrum/flask-example-cicd:stage
+      - name: Push Docker image
+        run: docker push mgrum/flask-example-cicd:stage
