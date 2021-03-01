@@ -1,6 +1,5 @@
 # This workflow will install Python dependencies, lint and check for syntax errors run with a single version of Python
 # After build the workflow will run all unit tests with pytest using a test matrix
-# On successful build and test it will create a docker image for productive environment and push it to a repository
 
 name: PROD - CI/CD Pipeline
 
