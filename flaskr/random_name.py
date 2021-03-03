@@ -17,6 +17,6 @@ lis_names = ["Cherish", "Damaris", "Oren", "Nona", "Rhona", "Jackqueline",
              "Letha", "Brianne", "Bennie", "Nancy", "Shaina", "Kelvin"]
 
 
-def random_name():
+def random_name():  # nosec
     index = random.randint(0, len(lis_names)-1)
     return str(lis_names[index])
